@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<faces-config version="1.2" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd">
+	<converter>
+		<description>Converts date to expected value.</description>
+		<converter-id>expectedTime</converter-id>
+		<converter-class>converters.ExpectedTimeConverter</converter-class>
+	</converter>
+	<managed-bean>
+		<managed-bean-name>stationSearch</managed-bean-name>
+		<managed-bean-class>beans.StationSearch</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>locale</managed-bean-name>
+		<managed-bean-class>beans.LocaleBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>locale</property-name>
+			<property-class>java.lang.String</property-class>
+			<value>no</value>
+		</managed-property>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>sessionBean</managed-bean-name>
+		<managed-bean-class>beans.SessionBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<navigation-rule>
+		<from-view-id>/*</from-view-id>
+		<navigation-case>
+			<from-outcome>showStation</from-outcome>
+			<to-view-id>/Station.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>search</from-outcome>
+			<to-view-id>/Search.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<application>
+		
+		<resource-bundle>
+			<base-name>MessageResource</base-name>
+			<var>msg</var>
+		</resource-bundle>
+	</application>
+</faces-config>

@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/WEB-INF/templates/mobile.xhtml">
+Station
+	<ui:define name="content">
+		<rich:panel styleClass="departurePanel">
+			<f:facet name="header">
+				<h:outputText value="#{msg.departures}" />
+			</f:facet>
+			<rich:dataTable id="depatureTable" var="line"
+				value="#{sessionBean.lines}">
+				<rich:column id="departureIconColumn">
+					<h:graphicImage
+						value="images/mobiletransporticons/#{line.type}.png"
+						id="departureIcon" alt="" />
+				</rich:column>
+				<rich:column id="departureLineColumn">
+					<f:facet name="header">
+						<h:outputText value="#{msg.line}" />
+					</f:facet>
+					<h:outputText value="#{line.lineId}">
+					</h:outputText>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.direction}" />
+					</f:facet>
+					<h:outputText value="#{line.destinationStop}">
+					</h:outputText>
+				</rich:column>
+				<rich:column breakBefore="true" colspan="3">
+					<a4j:repeat value="#{line.departures}" var="departure">
+						<!-- rgb(250, 240, 230) -->
+						<a
+							style="border-width: 1px 1px 1px 1px; padding: 3px 3px 3px 3px; margin: 3px 3px; line-height: 35px; border-style: solid solid solid solid; border-color: #CC5500; background-color: #{departure.onTime} ; -moz-border-radius: 6px 6px 6px 6px;">
+						<h:outputText value="#{departure.expected}"
+							converter="expectedTime" /> </a>
+					</a4j:repeat>
+				</rich:column>
+			</rich:dataTable>
+		</rich:panel>
+	</ui:define>
+</ui:composition>
+
+</html>

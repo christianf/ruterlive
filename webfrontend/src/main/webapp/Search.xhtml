@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/WEB-INF/templates/mobile.xhtml">
+	<ui:define name="content">
+		<rich:panel rendered="#{sessionBean.renderSelect}"
+			id="searchResultPanel">
+			<f:facet name="header">
+				<h:outputText value="#{msg.search_results}" id="searchResultHeader" />
+			</f:facet>
+			<h:form>
+				<rich:dataTable id="searchResultStationTable" var="station"
+					value="#{sessionBean.stations}" width="450"
+					binding="#{sessionBean.stationTable}">
+					<rich:column id="searchResultIconColumn">
+						<h:graphicImage
+							value="images/mobiletransporticons/#{station.type}.png"
+							id="searchResultIcon" alt="Icon" />
+					</rich:column>
+					<rich:column id="stationNameColumn">
+						<f:facet name="header">
+							<h:outputText value="#{msg.station_name}"
+								id="stationNameColumnHeader" />
+						</f:facet>
+						<h:commandLink value="#{station.stationName}"
+							action="#{sessionBean.selectStation}"
+							id="selectStationCommandLink"/>
+					</rich:column>
+					<rich:column id="searchResultLinesColumn">
+						<f:facet name="header">
+							<h:outputText value="#{msg.lines}"
+								id="searchResultsLinesColumnHeader" />
+						</f:facet>
+						<a4j:repeat value="#{station.linesList}" var="line">
+							<a
+								style="border-width: 1px 1px 1px 1px; padding: 3px 3px 3px 3px; margin: 3px 3px; line-height: 35px; border-style: solid solid solid solid; border-color: #CC5500; background-color: #FFFFFF; -moz-border-radius: 6px 6px 6px 6px;">
+							<h:outputText id="searchResultsLinesValue" value="#{line}" /> </a>
+						</a4j:repeat>
+					</rich:column>
+				</rich:dataTable>
+			</h:form>
+		</rich:panel>
+
+	</ui:define>
+</ui:composition>
+
+</html>

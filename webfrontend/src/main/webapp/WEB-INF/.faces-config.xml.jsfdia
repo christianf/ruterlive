@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#src#main#webapp#Search.xhtml"
+  PATH="/src/main/webapp/Search.xhtml" SHAPE="134,146,0,0"
+  model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#Station.xhtml" PATH="/Station.xhtml"
+  SHAPE="240,33,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#Station.xhtml:0" NAME="item"
+   PATH="/Station.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="search::#Search.xhtml" NAME="output"
+    PATH="/Search.xhtml" TARGET="rules:#Search.xhtml" TITLE="search" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#Search.xhtml" PATH="/Search.xhtml"
+  SHAPE="256,177,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#Search.xhtml:0" NAME="item"
+   PATH="/Search.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="showStation::#Station.xhtml" NAME="output"
+    PATH="/Station.xhtml" TARGET="rules:#Station.xhtml"
+    TITLE="showStation" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="search::#Search.xhtml" NAME="output1"
+    PATH="/Search.xhtml" TARGET="rules:#Search.xhtml" TITLE="search" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>

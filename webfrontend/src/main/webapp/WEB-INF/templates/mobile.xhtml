@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich">
+<f:view locale="#{locale.locale}">
+	<head>
+	<f:loadBundle basename="MessageResource" var="msg" />
+	<title><ui:insert name="title">RuterLive</ui:insert></title>
+	</head>
+	<body>
+	<ui:insert name="header">
+		<h:messages />
+		<h:graphicImage value="images/mobileheader.png" />
+	</ui:insert>
+	<ui:insert name="search">
+		<h:form>
+			<rich:panel style="margin-bottom: 10px;">
+				<f:facet name="header">
+					<h:outputText value="#{msg.station_search}" />
+				</f:facet>
+				<h:panelGrid columns="3">
+					<h:outputLabel id="stationInputLabel" value="#{msg.station}:"
+						for="stationInput" />
+					<h:inputText id="stationInput" value="#{sessionBean.stationName}"
+						required="true" requiredMessage="Du må skrive noe i søkefeltet"
+						minlength="3" size="15">
+						<f:validateLength minimum="2" />
+					</h:inputText>
+					<h:commandButton value="#{msg.search}"
+						action="#{sessionBean.search}" />
+					<!-- Bør muligens fjernes fra mobilversjon og kun
+						 brukes på en "vanlig" webversjon? 
+					<rich:suggestionbox id="suggestionbox" for="stationInput"
+						suggestionAction="#{stationSearch.getStationsForAutocomplete}"
+						var="station" minChars="3" width="500" height="200"
+						fetchValue="#{station.stationId}" nothingLabel="Ingen treff">
+						<rich:column id="searchSuggestionIconColumn" style="border:0px;">
+							<h:graphicImage
+								value="images/transportationIcons/#{station.type}.png"
+								id="searchSuggestionIcon" />
+						</rich:column>
+						<h:column style="border:0px;">
+							<h:outputText value="#{station.stationName}" />
+						</h:column>
+						<rich:column style="border:0px;">
+							<h:outputText value="#{station.lines}" />
+						</rich:column>
+					</rich:suggestionbox>
+					-->
+				</h:panelGrid>
+				<rich:message for="stationInput" style="color: red;" />
+			</rich:panel>
+		</h:form>
+	</ui:insert>
+	<ui:insert name="content">
+
+	</ui:insert>
+	<ui:insert name="footer">
+		<h:form>
+			<!-- FIXME: Make more dynamic language select with a gridPanel or something. -->
+			<h:commandButton image="images/mobileflags/Norway.png">
+				<f:setPropertyActionListener target="#{locale.locale}" value="no" />
+			</h:commandButton>
+			<h:commandButton image="images/mobileflags/Sweden.png">
+				<f:setPropertyActionListener target="#{locale.locale}" value="sv" />
+			</h:commandButton>
+			<h:commandButton image="images/mobileflags/Denmark.png">
+				<f:setPropertyActionListener target="#{locale.locale}" value="dk" />
+			</h:commandButton>
+			<h:commandButton image="images/mobileflags/UK.png">
+				<f:setPropertyActionListener target="#{locale.locale}" value="en" />
+			</h:commandButton>
+			<h:commandButton id="es" image="images/mobileflags/Spain.png">
+				<f:setPropertyActionListener target="#{locale.locale}" value="es" />
+			</h:commandButton>
+		</h:form>
+		<table>
+			<tr>
+				<td><h:graphicImage value="images/mobiletransporticons/0.png"
+					id="busLegendImage" alt="" /></td>
+				<td><h:outputText value="#{msg.bus}" id="busLegend" /></td>
+				<td><h:graphicImage value="images/mobiletransporticons/1.png"
+					id="tramLegendImage" alt="" /></td>
+				<td><h:outputText value="#{msg.tram}" id="tramLegend" /></td>
+			</tr>
+			<tr>
+				<td><h:graphicImage value="images/mobiletransporticons/2.png"
+					id="underGroundLegendImage" alt="" /></td>
+				<td><h:outputText value="#{msg.underground}"
+					id="underGroundLegend" /></td>
+				<td><h:graphicImage value="images/mobiletransporticons/3.png"
+					id="busAndTramLegendImage" alt="" /></td>
+				<td><h:outputText value="#{msg.bus_and_tram}"
+					id="busAndTramLegend" /></td>
+			</tr>
+		</table>
+	</ui:insert>
+	</body>
+</f:view>
+</html>

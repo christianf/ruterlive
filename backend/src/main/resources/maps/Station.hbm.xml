@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="structure.Station" table="Station">
+  <id column="Id" name="id">
+   <generator class="native"/>
+  </id>
+  <property generated="never" lazy="false" name="stationName">
+   <column name="StationName"/>
+  </property>
+  <property generated="never" lazy="false" name="stationId">
+   <column name="StationId"/>
+  </property>
+  <set lazy="false" name="direction" table="station_direction">
+   <key column="StationId"/>
+   <element type="integer" column="direction"/>
+  </set>
+  <set lazy="false" name="lines" table="station_lines">
+   <key column="StationId"/>
+   <element type="integer" column="line" />
+  </set>
+ </class>
+</hibernate-mapping>

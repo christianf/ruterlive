@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+
+<f:view locale="#{locale.locale}">
+	<head>
+
+	<f:loadBundle basename="messageResources.MessageResource" var="msg" />
+	<style type="text/css">
+.rich-tabpanel-content {
+	border: 0px;
+	padding: 0px;
+}
+</style>
+
+	</head>
+	<body style="background: images/ odin_logo.jpeg;">
+	<table>
+		<tr>
+			<td><h:graphicImage value="images/header.png" /></td>
+			<td><font style="FONT-FAMILY: 'Orange Kid'; font-size: 70px;">#RuterLive.no</font></td>
+			<td><h:form>
+				<table>
+					<!-- FIXME: Make more dynamic language select with a gridPanel or something. -->
+					<tr>
+						<td><h:commandButton image="images/flags/Norway.png">
+							<f:setPropertyActionListener target="#{locale.locale}" value="no" />
+						</h:commandButton></td>
+						<td><h:commandButton image="images/flags/Sweden.png">
+							<f:setPropertyActionListener target="#{locale.locale}" value="sv" />
+						</h:commandButton></td>
+						<td><h:commandButton image="images/flags/Denmark.png">
+							<f:setPropertyActionListener target="#{locale.locale}" value="dk" />
+						</h:commandButton></td>
+					</tr>
+					<tr>
+						<td><h:commandButton image="images/flags/UK.png">
+							<f:setPropertyActionListener target="#{locale.locale}" value="en" />
+						</h:commandButton></td>
+						<td><h:commandButton id="es" image="images/flags/Spain.png">
+							<f:setPropertyActionListener target="#{locale.locale}" value="es" />
+						</h:commandButton></td>
+					</tr>
+				</table>
+			</h:form></td>
+		</tr>
+	</table>
+	<div style="float: left; margin-right: 10px;"><h:form>
+		<rich:panel style="margin-bottom: 10px;">
+			<f:facet name="header">
+				<h:outputText value="#{msg.station_search}" />
+			</f:facet>
+			<h:panelGrid columns="3">
+				<h:outputLabel id="stationInputLabel" value="#{msg.station}:"
+					for="stationInput" />
+				<h:inputText id="stationInput" value="#{stationSelect.stationName}"
+					required="true" requiredMessage="Du må skrive noe i søkefeltet"
+					maxlength="3">
+					<f:validateLength minimum="2" />
+				</h:inputText>
+				<h:commandButton value="#{msg.search}" />
+
+				<rich:suggestionbox id="suggestionbox" for="stationInput"
+					suggestionAction="#{stationSelect.getStationsForAutocomplete}"
+					var="station" minChars="3" width="300" height="100"
+					fetchValue="#{station.stationName}" nothingLabel="Ingen treff">
+					<h:column>
+						<h:outputText value="#{station.stationName}" />
+					</h:column>
+				</rich:suggestionbox>
+
+			</h:panelGrid>
+			<rich:message for="stationInput" style="color: red;" />
+		</rich:panel>
+	</h:form><rich:panel rendered="#{stationSelect.renderSelect}">
+		<f:facet name="header">
+			<h:outputText value="#{msg.search_results}" />
+		</f:facet>
+		<h:form>
+			<rich:dataTable id="stationTable" var="station"
+				value="#{stationSelect.stations}" width="450"
+				binding="#{stationSelect.stationTable}">
+				<rich:column id="icon">
+					<h:graphicImage
+						value="images/transportationIcons/#{station.type}.png" />
+				</rich:column>
+				<rich:column id="stationName">
+					<f:facet name="header">
+						<h:outputText value="#{msg.station_name}" />
+					</f:facet>
+					<h:commandLink value="#{station.stationName}"
+						action="#{stationSelect.selectStation}" />
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.lines}" />
+					</f:facet>
+					<h:outputText value="#{station.lines}" />
+				</rich:column>
+			</rich:dataTable>
+		</h:form>
+		<h:panelGrid columns="4" width="100%" style="padding: 20px;">
+			<h:graphicImage value="images/transportationIcons/0.png" />
+			<h:outputText value="#{msg.bus}" />
+			<h:graphicImage value="images/transportationIcons/1.png" />
+			<h:outputText value="#{msg.tram}" />
+			<h:graphicImage value="images/transportationIcons/2.png" />
+			<h:outputText value="#{msg.underground}" />
+			<h:graphicImage value="images/transportationIcons/3.png" />
+			<h:outputText value="#{msg.bus_and_tram}" />
+		</h:panelGrid>
+	</rich:panel></div>
+	<div style="float: left;"><rich:panel styleClass="departurePanel"
+		rendered="#{stationSelect.renderDepartures}">
+		<f:facet name="header">
+			<h:outputText value="#{msg.departures}" />
+		</f:facet>
+
+
+
+		<rich:dataTable id="depatureTable" var="line"
+			value="#{stationSelect.lines}">
+			<rich:column id="line">
+				<f:facet name="header">
+					<h:outputText value="#{msg.line}" />
+				</f:facet>
+				<h:outputText value="#{line.lineId}">
+				</h:outputText>
+			</rich:column>
+			<rich:column>
+				<f:facet name="header">
+					<h:outputText value="#{msg.direction}" />
+				</f:facet>
+				<h:outputText value="#{line.destinationStop}">
+				</h:outputText>
+			</rich:column>
+			<rich:column breakBefore="true" colspan="2">
+				<table
+					style="border-width: 1px 1px 1px 1px; border-spacing: 4px; border-style: none none none none; border-color: gray gray gray gray; border-collapse: separate; background-color: white;">
+					<tr>
+						<a4j:repeat value="#{line.departures}" var="departure">
+							<td
+								style="border-width: 1px 1px 1px 1px; padding: 3px 3px 3px 3px; border-style: solid solid solid solid; border-color: #CC5500; background-color: rgb(250, 240, 230); -moz-border-radius: 6px 6px 6px 6px;"><h:outputText
+								value="#{departure.expected}" converter="expectedTime" /></td>
+						</a4j:repeat>
+					</tr>
+				</table>
+			</rich:column>
+		</rich:dataTable>
+
+
+	</rich:panel></div>
+	</body>
+</f:view>
+</html>
